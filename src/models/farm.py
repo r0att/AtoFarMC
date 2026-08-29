@@ -2,17 +2,24 @@
 Model farmy
 """
 from dataclasses import dataclass, field
+from datetime import datetime
+from coordinates import Coordinates
+
 
 @dataclass
 class Farm:
-    """Reprezentacja farmy"""
-    farm_id: int
+    """Reprezentacja farmy."""
+
+    id: int
     name: str
     farm_type: str
-    coordinated: str
-    version: str
-    world: str
-    created_by: int = field(repr=False)
-    created_at: str = field(repr=False)
+
+    created_by: int
+    world_id: int
+    created_at: datetime
+
+    version: str = field(repr=False)
+    coordinates: Coordinates = field(repr=False)
     description: str = field(repr=False)
-    productivity: dict = field(repr=False)
+    productivity: dict[str, float] = field(repr=False)
+    access_password_hash: str = field(repr=False)
