@@ -14,4 +14,5 @@ class World:
     address: str
     created_by: int
     created_at: datetime
+    description: str = field(repr=False)
     access_password_hash: str = field(repr=False)

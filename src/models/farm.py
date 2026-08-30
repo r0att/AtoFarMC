@@ -22,3 +22,5 @@ class Farm:
     description: str = field(repr=False)
     productivity: dict[str, float] = field(repr=False)
     access_password_hash: str = field(repr=False)
+    guide_link: str = field(repr=False)
+    
