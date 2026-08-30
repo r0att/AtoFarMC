@@ -69,6 +69,6 @@ DATABASE_PATH = Path(__file__).resolve().parent.parent / "data.db"
 
 def create_tables(db_url=f"sqlite:///{DATABASE_PATH}"):
     """Tworzy wszystkie tabele"""
-    
+
     engine = create_engine(db_url)
     Base.metadata.create_all(engine)
