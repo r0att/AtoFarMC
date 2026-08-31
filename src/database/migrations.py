@@ -11,8 +11,10 @@ class Base(DeclarativeBase):
 class FarmModel(Base):
     __tablename__ = "farms"
 
-    # Pola wymagane
+    # Klucz główny
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+
+    # Pola wymagane
     name: Mapped[str] = mapped_column(String(100), nullable=False)
     farm_type: Mapped[str] = mapped_column(String(50), nullable=False)
     version: Mapped[str] = mapped_column(String(25), nullable=False)
@@ -35,8 +37,10 @@ class FarmModel(Base):
 class WorldModel(Base):
     __tablename__ = "worlds"
 
-    # Pola wymagane
+    # Klucz głowny
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+
+    # Pola wymagane
     name: Mapped[str] = mapped_column(String(100), nullable=False)
     address: Mapped[str] = mapped_column(String(100), nullable=False, unique=True)
     access_password_hash: Mapped[str] = mapped_column(String(255), nullable=False)
@@ -51,8 +55,10 @@ class WorldModel(Base):
 class UserModel(Base):
     __tablename__ = "users"
 
-    # Pola wymagane
+    # Klucz głowny
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+
+    # Pola wymagane
     login: Mapped[str] = mapped_column(String(25), nullable=False, unique=True)
     email: Mapped[str] = mapped_column(String(255), nullable=False, unique=True)
     is_superuser: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
@@ -65,10 +71,21 @@ class UserModel(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now, nullable=False)
 
 
-DATABASE_PATH = Path(__file__).resolve().parent.parent / "data.db"
+class WorldPlayersModel(Base):
+    __tablename__ = "world_players"
 
-def create_tables(db_url=f"sqlite:///{DATABASE_PATH}"):
+    # Klucz głowny
+    world_id: Mapped[int] = mapped_column(Integer, ForeignKey("worlds.id"), primary_key=True)
+    user_id: Mapped[int] = mapped_column(Integer, ForeignKey("users.id"), primary_key=True)
+
+
+DATABASE_PATH = Path(__file__).resolve().parent / "data.db"
+
+def create_tables(db_url: str | None = None):
     """Tworzy wszystkie tabele"""
+
+    if db_url is None:
+        db_url = f"sqlite:///{DATABASE_PATH}"
 
     engine = create_engine(db_url)
     Base.metadata.create_all(engine)
