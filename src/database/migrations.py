@@ -65,6 +65,14 @@ class UserModel(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now, nullable=False)
 
 
+class WorldPlayersModel:
+    __tablename__ = "world_players"
+
+    # Pola wymagane
+    world_id: Mapped[int] = mapped_column(Integer, ForeignKey("worlds.id"), primary_key=True)
+    user_id: Mapped[int] = mapped_column(Integer, ForeignKey("users.id"), primary_key=True)
+
+
 DATABASE_PATH = Path(__file__).resolve().parent.parent / "data.db"
 
 def create_tables(db_url=f"sqlite:///{DATABASE_PATH}"):
