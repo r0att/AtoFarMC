@@ -71,7 +71,7 @@ class UserModel(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now, nullable=False)
 
 
-class WorldPlayersModel:
+class WorldPlayersModel(Base):
     __tablename__ = "world_players"
 
     # Klucz głowny
@@ -79,10 +79,13 @@ class WorldPlayersModel:
     user_id: Mapped[int] = mapped_column(Integer, ForeignKey("users.id"), primary_key=True)
 
 
-DATABASE_PATH = Path(__file__).resolve().parent.parent / "data.db"
+DATABASE_PATH = Path(__file__).resolve().parent / "data.db"
 
-def create_tables(db_url=f"sqlite:///{DATABASE_PATH}"):
+def create_tables(db_url: str | None = None):
     """Tworzy wszystkie tabele"""
+
+    if db_url is None:
+        db_url = f"sqlite:///{DATABASE_PATH}"
 
     engine = create_engine(db_url)
     Base.metadata.create_all(engine)
