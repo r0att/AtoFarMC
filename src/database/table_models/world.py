@@ -4,7 +4,7 @@ from sqlalchemy.orm import Mapped, mapped_column
 from .base import Base
 
 
-class WorldModel(Base):
+class WorldTable(Base):
     __tablename__ = "worlds"
 
     # Klucz głowny

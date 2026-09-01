@@ -4,7 +4,7 @@ from sqlalchemy.orm import Mapped, mapped_column
 from .base import Base
 
 
-class UserModel(Base):
+class UserTable(Base):
     __tablename__ = "users"
 
     # Klucz głowny

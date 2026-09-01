@@ -4,7 +4,7 @@ from sqlalchemy.orm import Mapped, mapped_column
 from .base import Base
 
 
-class FarmModel(Base):
+class FarmTable(Base):
     __tablename__ = "farms"
 
     # Klucz główny
