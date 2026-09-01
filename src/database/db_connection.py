@@ -7,7 +7,7 @@ from .table_models.base import Base
 DATABASE_PATH = Path(__file__).resolve().parent / "data.db"
 
 def create_tables(db_url: str | None = None):
-    """Tworzy wszystkie tabele"""
+    """Tworzy wszystkie tabele."""
 
     if db_url is None:
         db_url = f"sqlite:///{DATABASE_PATH}"
@@ -19,6 +19,6 @@ def create_tables(db_url: str | None = None):
 
 
 def get_session(engine) -> Session:
-    """Zwraca nową sesję bazy danych"""
+    """Zwraca nową sesję bazy danych."""
 
     return Session(engine)
