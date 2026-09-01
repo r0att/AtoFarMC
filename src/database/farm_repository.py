@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session
+from sqlalchemy import select
 from src.models import Farm
 from src.database.table_models import FarmTable
 
@@ -34,8 +35,36 @@ class FarmRepository:
         return True
 
 
+    def update(self, farm: Farm) -> Farm | None:
+        """Aktualizuje tabelę."""
+
+        farm_table = self.session.get(FarmTable, farm.id)
+
+        if farm_table is None:
+            return None
+
+        x, y, z = farm.coordinates if farm.coordinates else (None, None, None)
+
+        farm_table.name = farm.name
+        farm_table.farm_type = farm.farm_type
+        farm_table.version = farm.version
+        farm_table.created_by = farm.created_by
+        farm_table.world_id = farm.world_id
+        farm_table.x = x
+        farm_table.y = y
+        farm_table.z = z
+        farm_table.description = farm.description
+        farm_table.guide_link = farm.guide_link
+        farm_table.productivity = farm.productivity
+        farm_table.access_password_hash = farm.access_password_hash
+
+        self.session.flush()
+
+        return self._to_domain(farm_table)
+
+
     def get_by_id(self, farm_id: int) -> Farm | None:
-        """Wyszukuje farmę po id"""
+        """Wyszukuje farmę po id."""
 
         farm_table = self.session.get(FarmTable, farm_id)
 
@@ -43,6 +72,14 @@ class FarmRepository:
             return None
 
         return self._to_domain(farm_table)
+
+
+    def get_all(self) -> list[Farm]:
+        """Zwraca wszystkie farmy."""
+
+        farm_tables = self.session.scalars(select(FarmTable)).all()
+
+        return [self._to_domain(farm) for farm in farm_tables]
 
 
     @staticmethod
