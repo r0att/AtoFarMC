@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from sqlalchemy import select
+from sqlalchemy import select, asc, desc
 from src.models import Farm
 from src.database.table_models import FarmTable
 
@@ -77,9 +77,52 @@ class FarmRepository:
     def get_all(self) -> list[Farm]:
         """Zwraca wszystkie farmy."""
 
-        farm_tables = self.session.scalars(select(FarmTable)).all()
+        stmt = select(FarmTable)
 
-        return [self._to_domain(farm) for farm in farm_tables]
+        farm_tables = self.session.scalars(stmt).all()
+
+        return [self._to_domain(farm_table) for farm_table in farm_tables]
+
+
+    def search(
+            self,
+            name: str | None = None,
+            farm_type: str | None = None,
+            version: str | None = None,
+            world_id: int | None = None,
+            created_by: int | None = None,
+            has_guide: bool | None = None,
+            sort_by: str | None = None,
+            descending: bool = True
+    ) -> list[Farm]:
+        """Wyszukuje farmy po argumentach."""
+
+        stmt = select(FarmTable)
+
+        if name is not None:
+            stmt = stmt.where(FarmTable.name == name)
+        if farm_type is not None:
+            stmt = stmt.where(FarmTable.farm_type == farm_type)
+        if version is not None:
+            stmt = stmt.where(FarmTable.version == version)
+        if world_id is not None:
+            stmt = stmt.where(FarmTable.world_id == world_id)
+        if created_by is not None:
+            stmt = stmt.where(FarmTable.created_by == created_by)
+        if has_guide is not None:
+            stmt = stmt.where(FarmTable.guide_link.is_not(None)) if has_guide else stmt.where(FarmTable.guide_link.is_(None))
+
+        sort_columns = {
+            "created_at": FarmTable.created_at,
+            "name": FarmTable.name,
+            # Add favourites
+        }
+        column = sort_columns.get(sort_by, FarmTable.created_at)  # CHANGE TO FAVOURITES
+        stmt = stmt.order_by(desc(column) if descending else asc(column))
+
+        farm_tables = self.session.scalars(stmt).all()
+
+        return [self._to_domain(farm_table) for farm_table in farm_tables]
 
 
     @staticmethod
