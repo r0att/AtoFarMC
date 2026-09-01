@@ -9,10 +9,10 @@ from datetime import datetime
 class User:
     """Reprezentacja użytkownika."""
 
-    id: int
+    id: int | None
     login: str
     email: str
     is_superuser: bool
     created_at: datetime
     password_hash: str = field(repr=False)
-    description: str = field(repr=False)
+    description: str | None = field(repr=False)
