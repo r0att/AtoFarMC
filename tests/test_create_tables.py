@@ -4,7 +4,7 @@ from src.database.table_models import Base
 
 
 def test_create_tables():
-    """Testuje czy tabele tworzą się poprawnie w bazie danych"""
+    """Testuje czy tabele tworzą się poprawnie w bazie danych."""
 
     engine = create_tables("sqlite:///:memory:")
 
