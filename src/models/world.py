@@ -9,10 +9,11 @@ from datetime import datetime
 class World:
     """Reprezentacja świata."""
 
-    id: int
+    id: int | None
     name: str
     address: str
     created_by: int
     created_at: datetime
-    description: str = field(repr=False)
+    favourites: int | None = field(repr=False)
+    description: str | None = field(repr=False)
     access_password_hash: str = field(repr=False)

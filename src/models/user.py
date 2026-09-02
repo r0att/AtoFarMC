@@ -9,10 +9,14 @@ from datetime import datetime
 class User:
     """Reprezentacja użytkownika."""
 
-    id: int
+    id: int | None
     login: str
     email: str
     is_superuser: bool
     created_at: datetime
+    friends: list["User"] = field(repr=False)
+    favourite_farms: list[int] = field(repr=False)
+    favourite_worlds: list[int] = field(repr=False)
+    followers: int | None = field(repr=False)
     password_hash: str = field(repr=False)
-    description: str = field(repr=False)
+    description: str | None = field(repr=False)

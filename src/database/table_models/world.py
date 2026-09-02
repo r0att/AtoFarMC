@@ -4,7 +4,7 @@ from sqlalchemy.orm import Mapped, mapped_column
 from .base import Base
 
 
-class WorldModel(Base):
+class WorldTable(Base):
     __tablename__ = "worlds"
 
     # Klucz głowny
@@ -19,5 +19,6 @@ class WorldModel(Base):
     description: Mapped[str | None] = mapped_column(String(999))
 
     # Pola z wartościami domyślnymi
+    favourites: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now, nullable=False)
     

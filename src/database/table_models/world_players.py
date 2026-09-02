@@ -3,7 +3,7 @@ from sqlalchemy.orm import Mapped, mapped_column
 from .base import Base
 
 
-class WorldPlayersModel(Base):
+class WorldPlayersTable(Base):
     __tablename__ = "world_players"
 
     # Klucz głowny
