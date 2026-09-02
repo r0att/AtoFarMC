@@ -1,9 +1,10 @@
 from src.database.farm_repository import FarmRepository
 from src.models import Farm
-from datetime import datetime
 
 
 def test_crud_farm(session):
+    """Testuje operacje CRUD na farmach."""
+
     repository = FarmRepository(session)
 
     farm = Farm(
