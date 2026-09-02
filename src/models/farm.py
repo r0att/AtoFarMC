@@ -14,7 +14,7 @@ class Farm:
     farm_type: str
     created_by: int
     world_id: int | None
-    created_at: datetime
+    created_at: datetime | None
     favourites: int | None = field(repr=False)
     version: str = field(repr=False)
     coordinates: tuple[int, int, int] | None = field(repr=False)

@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import Boolean ,Integer, String, DateTime, Table, Column, ForeignKey
+from sqlalchemy import Boolean, Integer, String, DateTime, Table, Column, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from .base import Base
 
@@ -29,7 +29,11 @@ class UserTable(Base):
 
     # Pola z wartościami domyślnymi
     followers: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
-    friends: Mapped[list["UserTable"]] = relationship(default=list, secondary=user_friends)
+    friends: Mapped[list["UserTable"]] = relationship(
+        secondary=user_friends,
+        primaryjoin=id == user_friends.c.user_id,
+        secondaryjoin=id == user_friends.c.friend_id
+        )
     favourite_farms: Mapped[list[int]] = mapped_column(Integer, default=list, nullable=False)
     favourite_worlds: Mapped[list[int]] = mapped_column(Integer, default=list, nullable=False)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now, nullable=False)
