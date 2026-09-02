@@ -14,5 +14,6 @@ class World:
     address: str
     created_by: int
     created_at: datetime
+    favourites: int | None = field(repr=False)
     description: str | None = field(repr=False)
     access_password_hash: str = field(repr=False)

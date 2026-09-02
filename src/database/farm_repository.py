@@ -48,7 +48,6 @@ class FarmRepository:
         farm_table.name = farm.name
         farm_table.farm_type = farm.farm_type
         farm_table.version = farm.version
-        farm_table.created_by = farm.created_by
         farm_table.world_id = farm.world_id
         farm_table.x = x
         farm_table.y = y
@@ -115,9 +114,9 @@ class FarmRepository:
         sort_columns = {
             "created_at": FarmTable.created_at,
             "name": FarmTable.name,
-            # Add favourites
+            "favourites": FarmTable.favourites
         }
-        column = sort_columns.get(sort_by, FarmTable.created_at)  # CHANGE TO FAVOURITES
+        column = sort_columns.get(sort_by, FarmTable.favourites)
         stmt = stmt.order_by(desc(column) if descending else asc(column))
 
         farm_tables = self.session.scalars(stmt).all()
@@ -126,22 +125,23 @@ class FarmRepository:
 
 
     @staticmethod
-    def _to_domain(farm_model: FarmTable) -> Farm:
+    def _to_domain(farm_table: FarmTable) -> Farm:
         """Konwertuje FarmTable na Farm."""
 
         return Farm(
-            id = farm_model.id,
-            name = farm_model.name,
-            farm_type = farm_model.farm_type,
-            created_by = farm_model.created_by,
-            world_id = farm_model.world_id,
-            created_at = farm_model.created_at,
-            version = farm_model.version,
-            coordinates = (farm_model.x, farm_model.y, farm_model.z) if farm_model.x else None,
-            description = farm_model.description,
-            productivity = farm_model.productivity,
-            access_password_hash = farm_model.access_password_hash,
-            guide_link = farm_model.guide_link,
+            id = farm_table.id,
+            name = farm_table.name,
+            farm_type = farm_table.farm_type,
+            created_by = farm_table.created_by,
+            world_id = farm_table.world_id,
+            created_at = farm_table.created_at,
+            version = farm_table.version,
+            coordinates = (farm_table.x, farm_table.y, farm_table.z) if farm_table.x else None,
+            description = farm_table.description,
+            productivity = farm_table.productivity,
+            access_password_hash = farm_table.access_password_hash,
+            guide_link = farm_table.guide_link,
+            favourites = farm_table.favourites
         )
 
 
@@ -165,6 +165,7 @@ class FarmRepository:
             description = farm.description,
             productivity = farm.productivity,
             access_password_hash = farm.access_password_hash,
-            guide_link = farm.guide_link
+            guide_link = farm.guide_link,
+            favourites = farm.favourites
         )
     

@@ -26,5 +26,6 @@ class FarmTable(Base):
     guide_link: Mapped[str | None] = mapped_column(String(500))
 
     # Pola z wartościami domyślnymi
+    favourites: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now, nullable=False)
     productivity: Mapped[dict[str, float]] = mapped_column(JSON, default=dict, nullable=False)

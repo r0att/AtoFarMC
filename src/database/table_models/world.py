@@ -19,5 +19,6 @@ class WorldTable(Base):
     description: Mapped[str | None] = mapped_column(String(999))
 
     # Pola z wartościami domyślnymi
+    favourites: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now, nullable=False)
     
