@@ -12,13 +12,13 @@ class FarmRepository:
     def create(self, farm: Farm) -> Farm:
         """Dodaje farmę do bazy."""
 
-        farm_model = self._to_model(farm)
+        farm_table = self._to_table(farm)
 
-        self.session.add(farm_model)
+        self.session.add(farm_table)
         self.session.flush()
 
         # Zwraca Farm z wartościami przypisanymi przez BD
-        return self._to_domain(farm_model)
+        return self._to_domain(farm_table)
 
 
     def delete(self, farm_id: int) -> bool:
@@ -146,7 +146,7 @@ class FarmRepository:
 
 
     @staticmethod
-    def _to_model(farm: Farm) -> FarmTable:
+    def _to_table(farm: Farm) -> FarmTable:
         """Konwertuje Farm na FarmTable."""
 
         x, y, z = farm.coordinates if farm.coordinates else (None, None, None)
