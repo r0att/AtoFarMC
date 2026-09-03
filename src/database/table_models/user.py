@@ -31,8 +31,8 @@ class UserTable(Base):
     rank: Mapped[str] = mapped_column(String(25), default="konewka", nullable=False)
     friends: Mapped[list["UserTable"]] = relationship(
         secondary=user_friends,
-        primaryjoin=id == user_friends.c.user_id,
-        secondaryjoin=id == user_friends.c.friend_id
+        primaryjoin=(id == user_friends.c.user_id),
+        secondaryjoin=(id == user_friends.c.friend_id)
         )
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now, nullable=False)
     
