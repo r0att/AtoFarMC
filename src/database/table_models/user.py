@@ -34,7 +34,5 @@ class UserTable(Base):
         primaryjoin=id == user_friends.c.user_id,
         secondaryjoin=id == user_friends.c.friend_id
         )
-    favourite_farms: Mapped[list[int]] = mapped_column(Integer, default=list, nullable=False)
-    favourite_worlds: Mapped[list[int]] = mapped_column(Integer, default=list, nullable=False)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now, nullable=False)
     
