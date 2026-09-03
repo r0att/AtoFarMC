@@ -28,6 +28,7 @@ class UserTable(Base):
     description: Mapped[str | None] = mapped_column(String(999))
 
     # Pola z wartościami domyślnymi
+    rank: Mapped[str] = mapped_column(String(25), default="konewka", nullable=False)
     followers: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
     friends: Mapped[list["UserTable"]] = relationship(
         secondary=user_friends,

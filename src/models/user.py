@@ -12,6 +12,7 @@ class User:
     id: int | None
     login: str
     email: str
+    rank: str | None
     is_superuser: bool
     created_at: datetime
     friends: list["User"] = field(repr=False)
