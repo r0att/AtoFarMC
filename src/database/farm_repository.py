@@ -136,7 +136,11 @@ class FarmRepository:
             world_id = farm_table.world_id,
             created_at = farm_table.created_at,
             version = farm_table.version,
-            coordinates = (farm_table.x, farm_table.y, farm_table.z) if farm_table.x else None,
+            coordinates = (
+                (farm_table.x, farm_table.y, farm_table.z)
+                if farm_table.x is not None
+                else None
+            ),
             description = farm_table.description,
             productivity = farm_table.productivity,
             access_password_hash = farm_table.access_password_hash,
