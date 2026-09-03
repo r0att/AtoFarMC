@@ -1,7 +1,5 @@
 from sqlalchemy import inspect
-from src.database.db_connection import create_tables
 from src.database.table_models import Base
-from src.database.farm_repository import FarmRepository
 
 
 def test_create_tables(session):

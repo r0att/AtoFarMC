@@ -1,5 +1,6 @@
 from src.database.farm_repository import FarmRepository
 from src.models import Farm
+from src.database.table_models import UserTable
 
 
 def test_crud_farm(session):
@@ -7,11 +8,20 @@ def test_crud_farm(session):
 
     repository = FarmRepository(session)
 
+    user = UserTable(
+        login="testuser",
+        email="test@example.com",
+        password_hash="hash"
+    )
+
+    session.add(user)
+    session.flush()
+
     farm = Farm(
         id=None,
         name="Iron Farm",
         farm_type="Iron",
-        created_by=1,
+        created_by=user.id,
         world_id=None,
         created_at=None,
         version="1.21.8",
