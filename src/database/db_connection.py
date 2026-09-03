@@ -1,24 +1,31 @@
+import os
+from dotenv import load_dotenv
 from sqlalchemy import create_engine
-from sqlalchemy.orm import Session
-from pathlib import Path
+from sqlalchemy.orm import sessionmaker, Session
 from .table_models.base import Base
 
 
-DATABASE_PATH = Path(__file__).resolve().parent / "data.db"
+load_dotenv()
 
-def create_tables(db_url: str | None = None):
-    """Tworzy wszystkie tabele."""
+DATABASE_URL = os.getenv("DATABASE_URL")
 
-    if db_url is None:
-        db_url = f"sqlite:///{DATABASE_PATH}"
+if not DATABASE_URL:
+    raise RuntimeError("DATABASE_URL is not set")
 
-    engine = create_engine(db_url)
+
+engine = create_engine(DATABASE_URL)
+
+SessionLocal = sessionmaker(
+    bind=engine,
+    autoflush=False,
+    autocommit=False
+)
+
+
+def create_tables() -> None:
     Base.metadata.create_all(engine)
 
-    return engine
 
-
-def get_session(engine) -> Session:
-    """Zwraca nową sesję bazy danych."""
-
-    return Session(engine)
+def get_session():
+    with SessionLocal() as session:
+        yield session

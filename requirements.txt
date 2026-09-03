@@ -3,3 +3,4 @@ SQLAlchemy>=2.0       # Baza danych
 bcrypt>=4.0           # Hashing hasła
 pytest>=7.0           # Testy
 python-dotenv>=1.0    # Zmienne env
+psycopg[binary]>=3.0
