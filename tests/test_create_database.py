@@ -12,7 +12,10 @@ def test_create_tables(session):
         "worlds",
         "farms",
         "world_players",
-        "user_friends"
+        "user_friends",
+        "user_favourite_farms",
+        "user_favourite_worlds",
+        "user_followers"
     }
 
     # Testowanie, czy modele są zarejestrowany
