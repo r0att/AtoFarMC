@@ -16,6 +16,5 @@ class User:
     is_superuser: bool
     created_at: datetime
     friends: list["User"] = field(repr=False)
-    followers: int | None = field(repr=False)
     password_hash: str = field(repr=False)
     description: str | None = field(repr=False)
