@@ -99,11 +99,11 @@ class FarmRepository:
         stmt = select(FarmTable)
 
         if name is not None:
-            stmt = stmt.where(FarmTable.name == name)
+            stmt = stmt.where(FarmTable.name.ilike(f"{name}%"))
         if farm_type is not None:
-            stmt = stmt.where(FarmTable.farm_type == farm_type)
+            stmt = stmt.where(FarmTable.farm_type.ilike(f"{farm_type}%"))
         if version is not None:
-            stmt = stmt.where(FarmTable.version == version)
+            stmt = stmt.where(FarmTable.version.ilike(f"{version}%"))
         if world_id is not None:
             stmt = stmt.where(FarmTable.world_id == world_id)
         if created_by is not None:

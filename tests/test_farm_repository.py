@@ -70,6 +70,18 @@ def test_crud_farm(session):
     assert updated.name == "Updated Farm"
     assert updated.version == "1.21.9"
 
+    # Test wyszukiwania
+    searched = repository.search(
+        name="Iro",
+        version="1.21",
+        world_id=None,
+        has_guide=False,
+        sort_by="favourites",
+        descending=True
+    )
+
+    assert searched == [farm2,]
+
     # Test usuwania farmy
     result = repository.delete(created.id)
 
