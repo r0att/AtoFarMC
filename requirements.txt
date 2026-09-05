@@ -4,3 +4,5 @@ bcrypt>=4.0           # Hashing hasła
 pytest>=7.0           # Testy
 python-dotenv>=1.0    # Zmienne env
 psycopg[binary]>=3.0
+fastapi>=0.115
+uvicorn[standard]>=0.30
